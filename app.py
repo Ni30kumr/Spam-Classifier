@@ -2,7 +2,6 @@ import streamlit as st
 import pickle
 import string
 import nltk
-nltk.download()
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import ssl
@@ -21,15 +20,8 @@ def download_nltk_data():
     else:
         ssl._create_default_https_context = _create_unverified_https_context
     
-    try:
-        nltk.data.find('tokenizers/punkt')
-    except LookupError:
-        nltk.download('punkt', download_dir=nltk_data_dir, quiet=True)
-    
-    try:
-        nltk.data.find('corpora/stopwords')
-    except LookupError:
-        nltk.download('stopwords', download_dir=nltk_data_dir, quiet=True)
+    nltk.download('punkt', download_dir=nltk_data_dir, quiet=True)
+    nltk.download('stopwords', download_dir=nltk_data_dir, quiet=True)
 
 download_nltk_data()
 
