@@ -1,13 +1,25 @@
 import streamlit as st
 import pickle
 import string
-from nltk.corpus import stopwords
 import nltk
-nltk.download('punkt_tab')
+from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+import ssl
+
+def download_nltk_data():
+    try:
+        _create_unverified_https_context = ssl._create_unverified_context
+    except AttributeError:
+        pass
+    else:
+        ssl._create_default_https_context = _create_unverified_https_context
+    
+    nltk.download('punkt')
+    nltk.download('stopwords')
+
+download_nltk_data()
 
 ps = PorterStemmer()
-
 
 def transform_text(text):
     text = text.lower()
@@ -41,7 +53,6 @@ st.title("Email/SMS Spam Classifier")
 input_sms = st.text_area("Enter the message")
 
 if st.button('Predict'):
-
     # 1. preprocess
     transformed_sms = transform_text(input_sms)
     # 2. vectorize
